@@ -1,0 +1,32 @@
+# Service A: app.yaml
+service: service-d # Or 'default' if this is your main service
+runtime: nodejs20 # Or nodejs18, nodejs16 etc.
+instance_class: F1 # Cost-effective starting point
+
+# Environment variables (migrate from .env)
+env_variables:
+  # NODE_ENV: production # Good practice
+  # GEMINI_API_KEY: "YOUR_ACTUAL_GEMINI_API_KEY" # PASTE ACTUAL KEY HERE (See Note below)
+# --- Backend Config ---
+  PORT: 3000
+  BACKEND_CALLBACK_URL: "http://localhost:3000" # Make sure this is correct
+
+  # --- Jenkins Config ---
+  JENKINS_URL: "http://13.233.117.222:8080" # Your Jenkins URL (NO trailing slash)
+  # JENKINS_JOB_NAME: 'deploy-html-to-firebase' # <-- Or your chosen Jenkins job name for firebase deployment
+  JENKINS_JOB_NAME: "upload-to-git" #for git deployment
+  JENKINS_USER: "tahaaiyaaz"
+  JENKINS_API_TOKEN: "11d5785f7e215c10222226eee02a1ca529"
+  INTERNAL_API_KEY: "197CD7795B44984755BE4E4F4A6BB"
+  # PORT: 8080 # GAE sets this automatically, but explicit doesn't hurt
+
+# Optional: Scaling settings (defaults are usually fine to start)
+# automatic_scaling:
+#   min_instances: 0
+#   max_instances: 1
+#   target_cpu_utilization: 0.65
+
+# Handlers are often automatic for Node.js Express apps
+# handlers:
+# - url: /.*
+#   script: auto
