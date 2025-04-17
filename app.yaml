@@ -1,5 +1,5 @@
 # Service A: app.yaml
-service: service-a # Or 'default' if this is your main service
+service: service-b # Or 'default' if this is your main service
 runtime: nodejs20 # Or nodejs18, nodejs16 etc.
 instance_class: F1 # Cost-effective starting point
 
@@ -7,32 +7,18 @@ instance_class: F1 # Cost-effective starting point
 env_variables:
   # NODE_ENV: production # Good practice
   # GEMINI_API_KEY: "YOUR_ACTUAL_GEMINI_API_KEY" # PASTE ACTUAL KEY HERE (See Note below)
-  GEMINI_API_KEY: "AIzaSyBkj61neBux6vhHS_iqWPv97Tgo-6WvKuA" # Use your Google AI Studio key
-  PORT: 3002
+  GOOGLE_APPLICATION_CREDENTIALS: "./functionsinjs-firebase-adminsdk-qpa97-44a2d86f99.json"
+  GCS_BUCKET_NAME: "gs://functionsinjs.firebasestorage.app"
+  PORT: 3001 
   # PORT: 8080 # GAE sets this automatically, but explicit doesn't hurt
 
 # Optional: Scaling settings (defaults are usually fine to start)
-automatic_scaling:
-  min_instances: 0
-  max_instances: 2
-  target_cpu_utilization: 1
+# automatic_scaling:
+#   min_instances: 0
+#   max_instances: 1
+#   target_cpu_utilization: 0.65
 
 # Handlers are often automatic for Node.js Express apps
 # handlers:
 # - url: /.*
 #   script: auto
-
-readiness_check:
-  path: /readiness_check    # Path defined in server.js
-  check_interval_sec: 10    # Check every 10 seconds
-  timeout_sec: 4          # Timeout for each check
-  failure_threshold: 3      # Fail after 3 consecutive failures
-  success_threshold: 2      # Become ready after 2 consecutive successes
-  app_start_timeout_sec: 180 # INCREASED: Give instance up to 3 minutes to pass first readiness check
-
-liveness_check:
-  path: /liveness_check     # Path defined in server.js
-  check_interval_sec: 30
-  timeout_sec: 4
-  failure_threshold: 3
-  success_threshold: 1
